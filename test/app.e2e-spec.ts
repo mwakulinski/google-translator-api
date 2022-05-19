@@ -19,9 +19,7 @@ describe('AppController (e2e)', () => {
 
   describe('/translator [POST]', () => {
     it('properly sends request to endpoint', async () => {
-      const { body: response, status: status } = await request(
-        app.getHttpServer(),
-      )
+      const { status } = await request(app.getHttpServer())
         .post('/translator')
         .send({ language: 'en' });
 
@@ -45,6 +43,15 @@ describe('AppController (e2e)', () => {
         statusCode: 400,
       });
     });
+  });
+
+  it('translates text to given language', async () => {
+    const { text, status } = await request(app.getHttpServer())
+      .post('/translator')
+      .send({ language: 'en' });
+
+    expect(status).toBe(201);
+    expect(text).toBe('How are you');
   });
 
   afterAll(async () => {
