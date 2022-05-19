@@ -17,7 +17,6 @@ export class TranslatorService {
         'Jak się masz',
         body.language,
       );
-      console.log(response);
       return response;
     } catch (error) {
       return error;
