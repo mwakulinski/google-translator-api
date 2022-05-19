@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { TranslateLanguage } from './TranslateLanguage';
 import { TranslatorService } from './translator.service';
 
@@ -7,8 +7,7 @@ export class TranslatorController {
   constructor(private readonly translatorService: TranslatorService) {}
 
   @Post()
-  @HttpCode(201)
-  translate(@Body() body: TranslateLanguage) {
-    this.translatorService.translate(body);
+  async translate(@Body() body: TranslateLanguage) {
+    return await this.translatorService.translate(body);
   }
 }
