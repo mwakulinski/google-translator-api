@@ -8,5 +8,7 @@ export class TranslatorController {
 
   @Post()
   @HttpCode(201)
-  translate(@Body() body: TranslateLanguage) {}
+  translate(@Body() body: TranslateLanguage) {
+    this.translatorService.translate(body);
+  }
 }
