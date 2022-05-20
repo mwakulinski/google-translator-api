@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FileHandlerService } from './file-handler.service';
 import * as fs from 'fs';
+const path = require('path');
 
 // jest.mock('fs', () => ({
 //   promises: {
@@ -50,10 +51,19 @@ describe('FileHandlerService', () => {
     });
   });
 
-  describe('readFile', () => {
+  describe('readFile()', () => {
     it('should read data form file', async () => {
       await service.readFile('texts', 'en.json');
       expect(fs.promises.readFile).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('checkIfExist', () => {
+    it('should read data form file', async () => {
+      //@ts-ignore
+      fs.existsSync = jest.fn();
+      await service.checkIfExist(path.resolve('texts'));
+      expect(fs.existsSync).toHaveBeenCalledTimes(1);
     });
   });
 });

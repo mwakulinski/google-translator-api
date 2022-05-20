@@ -5,6 +5,10 @@ const path = require('path');
 
 @Injectable()
 export class FileHandlerService {
+  checkIfExist(pathToFile: string) {
+    return fs.existsSync(path.resolve(pathToFile));
+  }
+
   async readFile(dirName: string, fileName: string) {
     try {
       const result = await fs.promises.readFile(
