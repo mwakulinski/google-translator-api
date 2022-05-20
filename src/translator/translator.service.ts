@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleConntectorService } from './google-conntector/google-conntector.service';
-import { TranslateLanguage } from './TranslateLanguage';
+import { createTranslateDto } from './dto/create-translate.dto';
 
 @Injectable()
 export class TranslatorService {
@@ -11,7 +11,7 @@ export class TranslatorService {
     this.translator = googleConnectorService.createTranslatorService();
   }
 
-  async translate(body: TranslateLanguage) {
+  async translate(body: createTranslateDto) {
     try {
       const [response] = await this.translator.translate(
         'Jak się masz',

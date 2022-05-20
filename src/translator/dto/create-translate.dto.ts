@@ -1,6 +1,6 @@
 import { IsString, MinLength } from 'class-validator';
 
-export class TranslateLanguage {
+export class createTranslateDto {
   @IsString()
   @MinLength(2)
   language: string;

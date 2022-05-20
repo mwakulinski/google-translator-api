@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TranslateLanguage } from '../TranslateLanguage';
+import { createTranslateDto } from '../dto/create-translate.dto';
 import { v2 } from '@google-cloud/translate';
 
 @Injectable()
