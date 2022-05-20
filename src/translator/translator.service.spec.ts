@@ -80,5 +80,13 @@ describe('TranslatorService', () => {
       expect(fileHandlerService.writeToFile).toHaveBeenCalledTimes(1);
       expect(response).toBe('text');
     });
+
+    it('should read translated text from the file if file exists and should not translate it', async () => {
+      fileHandlerService.checkIfExist = jest.fn((path: string) => true);
+      const response = await service.translate({ language: 'en' });
+      expect(fileHandlerService.readFile).toHaveBeenCalledTimes(1);
+      expect(fileHandlerService.writeToFile).toHaveBeenCalledTimes(0);
+      expect(response).toBe('text');
+    });
   });
 });
