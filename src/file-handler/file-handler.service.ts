@@ -9,6 +9,7 @@ export class FileHandlerService {
     try {
       const result = await fs.promises.readFile(
         path.resolve(dirName, fileName),
+        'utf8',
       );
       return result;
     } catch (error) {
