@@ -5,6 +5,17 @@ const path = require('path');
 
 @Injectable()
 export class FileHandlerService {
+  async readFile(dirName: string, fileName: string) {
+    try {
+      const result = await fs.promises.readFile(
+        path.resolve(dirName, fileName),
+      );
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async writeToFile<T>(dirName: string, fileName: string, input: T) {
     // try {
     //   const response = fs.promises.stat(path.resolve(dirName));
