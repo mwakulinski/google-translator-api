@@ -5,6 +5,13 @@ const path = require('path');
 
 @Injectable()
 export class FileHandlerService {
+  async createDirectory(dirName: string) {
+    if (this.checkIfExist(path.resolve(dirName))) {
+      return;
+    }
+    await fs.promises.mkdir(path.resolve(dirName));
+  }
+
   checkIfExist(pathToFile: string) {
     return fs.existsSync(path.resolve(pathToFile));
   }
@@ -22,17 +29,8 @@ export class FileHandlerService {
   }
 
   async writeToFile<T>(dirName: string, fileName: string, input: T) {
-    // try {
-    //   const response = fs.promises.stat(path.resolve(dirName));
-    //   console.log(response);
-    // } catch (error) {
-    //   await fs.promises.mkdir(path.resolve(dirName));
-    // }
-
     try {
-      if (!fs.existsSync(path.resolve(dirName))) {
-        await fs.promises.mkdir(path.resolve(dirName));
-      }
+      await this.createDirectory(dirName);
       await fs.promises.writeFile(
         path.resolve(dirName, fileName),
         JSON.stringify(input),

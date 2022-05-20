@@ -17,6 +17,8 @@ describe('FileHandlerService', () => {
   fs.promises.writeFile = jest.fn();
   fs.promises.readFile = jest.fn();
   fs.promises.mkdir = jest.fn();
+  //@ts-ignore
+  fs.existsSync = jest.fn();
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -62,8 +64,17 @@ describe('FileHandlerService', () => {
     it('should read data form file', async () => {
       //@ts-ignore
       fs.existsSync = jest.fn();
-      await service.checkIfExist(path.resolve('texts'));
+      service.checkIfExist(path.resolve('texts'));
       expect(fs.existsSync).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('createDirectory', () => {
+    it('should create new a directory', async () => {
+      //@ts-ignore
+      fs.existsSync = jest.fn(() => false);
+      await service.createDirectory(path.resolve('texts'));
+      expect(fs.promises.mkdir).toHaveBeenCalledTimes(1);
     });
   });
 });
