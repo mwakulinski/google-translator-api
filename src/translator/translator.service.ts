@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { GoogleConntectorService } from './google-conntector/google-conntector.service';
+import { GoogleConnectorService } from './google-conntector/google-conntector.service';
 import { createTranslateDto } from './dto/create-translate.dto';
 import { FileHandlerService } from '../file-handler/file-handler.service';
 const path = require('path');
@@ -7,7 +7,7 @@ const path = require('path');
 @Injectable()
 export class TranslatorService {
   constructor(
-    private readonly googleConnectorService: GoogleConntectorService,
+    private readonly googleConnectorService: GoogleConnectorService,
     private readonly fileHandlerService: FileHandlerService,
   ) {}
 

@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GoogleConntectorService } from './google-conntector.service';
+import { GoogleConnectorService } from './google-conntector.service';
 
 describe('GoogleConntectorService', () => {
-  let service: GoogleConntectorService;
+  let service: GoogleConnectorService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GoogleConntectorService],
+      providers: [GoogleConnectorService],
     }).compile();
 
-    service = module.get<GoogleConntectorService>(GoogleConntectorService);
+    service = module.get<GoogleConnectorService>(GoogleConnectorService);
   });
 
   it('should be defined', () => {

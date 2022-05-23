@@ -3,7 +3,7 @@ import { createTranslateDto } from '../dto/create-translate.dto';
 import { v2 } from '@google-cloud/translate';
 
 @Injectable()
-export class GoogleConntectorService {
+export class GoogleConnectorService {
   private createTranslatorService() {
     const projectId = process.env.PROJECT_ID;
     const credentials = JSON.parse(process.env.CREDENTIALS!);

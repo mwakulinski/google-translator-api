@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FileHandlerService } from '../file-handler/file-handler.service';
 import { createTranslateDto } from './dto/create-translate.dto';
-import { GoogleConntectorService } from './google-conntector/google-conntector.service';
+import { GoogleConnectorService } from './google-conntector/google-conntector.service';
 import { TranslatorService } from './translator.service';
 import * as fs from 'fs';
 
@@ -34,7 +34,7 @@ describe('TranslatorService', () => {
           },
         },
         {
-          provide: GoogleConntectorService,
+          provide: GoogleConnectorService,
           useValue: {
             ...mockGoogleConnector,
           },
