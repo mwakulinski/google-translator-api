@@ -28,7 +28,7 @@ describe('FileHandlerService', () => {
   });
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -55,6 +55,8 @@ describe('FileHandlerService', () => {
 
   describe('readFile()', () => {
     it('should read data form file', async () => {
+      //@ts-ignore
+      fs.existsSync = jest.fn().mockReturnValue(false);
       await service.readFile('texts', 'en.json');
       expect(fs.promises.readFile).toHaveBeenCalledTimes(1);
     });
