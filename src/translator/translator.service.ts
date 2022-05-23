@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { GoogleConnectorService } from './google-conntector/google-conntector.service';
 import { createTranslateDto } from './dto/create-translate.dto';
 import { FileHandlerService } from '../file-handler/file-handler.service';
+import { CONSTS } from '../CONSTS';
 
 @Injectable()
 export class TranslatorService {
@@ -12,7 +13,7 @@ export class TranslatorService {
 
   async getTranslatedData<T>(body: createTranslateDto, objectToTranslate: T) {
     const readData = await this.fileHandlerService.readFile(
-      'texts', //===> skąd brać nazwę folderu w prawdziwym projekcie?
+      CONSTS.TEXTS_DIR,
       `${body.language}.json`,
     );
     if (readData) return JSON.parse(readData);
@@ -25,7 +26,7 @@ export class TranslatorService {
     );
 
     await this.fileHandlerService.writeToFile(
-      'texts',
+      CONSTS.TEXTS_DIR,
       `${body.language}.json`,
       translatedObject,
     );
