@@ -51,7 +51,7 @@ describe('AppController (e2e)', () => {
       .send({ language: 'en' });
 
     expect(status).toBe(201);
-    expect(text).toBe('How are you');
+    expect(text).toMatchSnapshot();
   });
 
   afterAll(async () => {

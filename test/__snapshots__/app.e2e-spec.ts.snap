@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppController (e2e) translates text to given language 1`] = `"{\\"attention\\":{\\"title\\":\\"Good that you are here, check this assignment\\",\\"subtitle\\":\\"It will help you figure out how to switch languages in React apps\\",\\"ctaButton\\":\\"Find out more\\",\\"array\\":[\\"Hello\\",\\"how\\",\\"myself\\",\\"you have\\",{\\"nested\\":\\"object\\"}]},\\"newsletter\\":{\\"title\\":\\"Good that you are here, check this assignment\\",\\"ctaButton\\":\\"It will help you figure out how to switch languages in React apps\\",\\"action\\":\\"Find out more\\",\\"object\\":{\\"it\\":\\"Hello\\"}}}"`;
