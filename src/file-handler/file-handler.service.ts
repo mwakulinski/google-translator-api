@@ -18,7 +18,7 @@ export class FileHandlerService {
 
   async readFile(dirName: string, fileName: string) {
     try {
-      if (this.checkIfExist(path.resolve(dirName, fileName))) return;
+      if (!this.checkIfExist(path.resolve(dirName, fileName))) return;
       const result = await fs.promises.readFile(
         path.resolve(dirName, fileName),
         'utf8',
