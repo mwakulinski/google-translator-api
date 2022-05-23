@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { dir } from 'console';
 import * as fs from 'fs';
 const path = require('path');
 

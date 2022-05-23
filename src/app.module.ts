@@ -6,7 +6,11 @@ import { TranslatorModule } from './translator/translator.module';
 import { FileHandlerModule } from './file-handler/file-handler.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), TranslatorModule, FileHandlerModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    TranslatorModule,
+    FileHandlerModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

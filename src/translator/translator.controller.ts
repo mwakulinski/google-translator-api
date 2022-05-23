@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { FileHandlerService } from 'src/file-handler/file-handler.service';
 import { createTranslateDto } from './dto/create-translate.dto';
 import { TranslatorService } from './translator.service';

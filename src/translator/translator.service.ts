@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { GoogleConnectorService } from './google-conntector/google-conntector.service';
 import { createTranslateDto } from './dto/create-translate.dto';
 import { FileHandlerService } from '../file-handler/file-handler.service';
-const path = require('path');
 
 @Injectable()
 export class TranslatorService {
@@ -64,7 +63,6 @@ export class TranslatorService {
           translatedValuesArray,
         );
       }
-      //@ts-ignore
       data[key] = translatedValuesArray[index];
       index++;
     });
