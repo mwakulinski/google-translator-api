@@ -13,26 +13,24 @@ export class TranslatorService {
 
   async getTranslatedData<T>(body: createTranslateDto, objectToTranslate: T) {
     const readData = await this.fileHandlerService.readFile(
-      'texts',
+      'texts', //===> skąd brać nazwę folderu w prawdziwym projekcie?
       `${body.language}.json`,
     );
     if (readData) return JSON.parse(readData);
+
     const TranslatedData = await this.translate(body, objectToTranslate);
     const translatedObject = await this.createTranslatedObject(
       objectToTranslate,
       0,
       TranslatedData,
     );
-    try {
-      await this.fileHandlerService.writeToFile(
-        'texts',
-        `${body.language}.json`,
-        translatedObject,
-      );
-    } catch (error) {
-      console.log(error);
-      return translatedObject;
-    }
+
+    await this.fileHandlerService.writeToFile(
+      'texts',
+      `${body.language}.json`,
+      translatedObject,
+    );
+
     return translatedObject;
   }
 
