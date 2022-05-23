@@ -3,16 +3,18 @@ import { FileHandlerService } from '../file-handler/file-handler.service';
 import { createTranslateDto } from './dto/create-translate.dto';
 import { GoogleConnectorService } from './google-conntector/google-conntector.service';
 import { TranslatorService } from './translator.service';
-import * as fs from 'fs';
 
 describe('TranslatorService', () => {
   let service: TranslatorService;
   let fileHandlerService: FileHandlerService;
 
-  const mockGoogleConnector = { createTranslatorService: jest.fn() };
+  const mockGoogleConnector = {
+    translate: jest.fn(),
+    createTranslatorService: jest.fn(),
+  };
   const mockFileHandler: FileHandlerService = {
     readFile: jest.fn((dirName: string, fileName: string) =>
-      Promise.resolve('text'),
+      Promise.resolve({ text: 'text' }),
     ),
     writeToFile: jest.fn((dirName: string, fileName: string) =>
       Promise.resolve(),
@@ -45,27 +47,29 @@ describe('TranslatorService', () => {
     })
       // .overrideProvider(FileHandlerService)
       // .useValue(mockFileHandler)
-      // .overrideProvider(GoogleConntectorService)
+      // .overrideProvider(GoogleConnectorService)
       // .useValue(mockGoogleConnector)
       .compile();
 
     service = module.get<TranslatorService>(TranslatorService);
     fileHandlerService = module.get<FileHandlerService>(FileHandlerService);
 
-    service.translate = jest.fn(async (body: createTranslateDto) => {
-      if (fileHandlerService.checkIfExist('path')) {
-        return await fileHandlerService.readFile(
+    service.getTranslatedData = jest.fn(
+      async (body: createTranslateDto, objectToTranslate) => {
+        if (fileHandlerService.checkIfExist('path')) {
+          return await fileHandlerService.readFile(
+            'texts',
+            `${body.language}.json`,
+          );
+        }
+        await fileHandlerService.writeToFile(
           'texts',
           `${body.language}.json`,
+          'text',
         );
-      }
-      await fileHandlerService.writeToFile(
-        'texts',
-        `${body.language}.json`,
-        'text',
-      );
-      return Promise.resolve('text');
-    });
+        return Promise.resolve({ text: 'text' });
+      },
+    );
   });
 
   it('should be defined', () => {
@@ -75,18 +79,24 @@ describe('TranslatorService', () => {
   describe('translate()', () => {
     it('should translate text to given language and should not read from the file', async () => {
       fileHandlerService.checkIfExist = jest.fn((path: string) => false);
-      const response = await service.translate({ language: 'en' });
+      const response = await service.getTranslatedData(
+        { language: 'en' },
+        { text: 'tekst' },
+      );
       expect(fileHandlerService.readFile).not.toHaveBeenCalled();
       expect(fileHandlerService.writeToFile).toHaveBeenCalledTimes(1);
-      expect(response).toBe('text');
+      expect(response).toEqual({ text: 'text' });
     });
 
     it('should read translated text from the file if file exists and should not translate it', async () => {
       fileHandlerService.checkIfExist = jest.fn((path: string) => true);
-      const response = await service.translate({ language: 'en' });
+      const response = await service.getTranslatedData(
+        { language: 'en' },
+        { text: 'tekst' },
+      );
       expect(fileHandlerService.readFile).toHaveBeenCalledTimes(1);
       expect(fileHandlerService.writeToFile).toHaveBeenCalledTimes(0);
-      expect(response).toBe('text');
+      expect(response).toEqual({ text: 'text' });
     });
   });
 });
