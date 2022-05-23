@@ -2,11 +2,13 @@
   "attention": {
     "title": "Dobrze, że jesteś, sprawdź to zadanie",
     "subtitle": "Pomoże Ci ogarnąć jak zmieniać język w apkach reacta",
-    "ctaButton": "Dowiedź się więcej"
+    "ctaButton": "Dowiedź się więcej",
+    "array": ["hej", "jak", "się", "masz", { "nested": "obiekt" }]
   },
   "newsletter": {
     "title": "Bądź na bieżąco",
     "ctaButton": "Idź do repo ->",
-    "action": "/new-subscriber?lang=pl"
+    "action": "/new-subscriber?lang=pl",
+    "object": { "it": "jest" }
   }
 }
