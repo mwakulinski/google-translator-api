@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { GoogleConnectorService } from './google-conntector/google-conntector.service';
 import { createTranslateDto } from './dto/create-translate.dto';
 import { FileHandlerService } from '../file-handler/file-handler.service';
-import { CONSTS } from '../CONSTS';
+
+const fileNames = {
+  textsDir: 'texts',
+  fileWithObject: 'pl.json',
+};
 
 @Injectable()
 export class TranslatorService {
@@ -15,13 +19,20 @@ export class TranslatorService {
   //no to mockuje fileHandlerService i sprwdzam czy jest to co zwraca
   //2 nie ma
   //czytam googla i sprawdzam czy fileHandlerservice miał coś zapisać i zwraca przetłumaczone wartości
-  async getTranslatedData<T>(body: createTranslateDto, objectToTranslate: T) {
+  async getTranslatedData<T>(body: createTranslateDto) {
     //if exists
     const readData = await this.fileHandlerService.readFile(
-      CONSTS.TEXTS_DIR,
+      fileNames.textsDir,
       `${body.language}.json`,
     );
     if (readData) return JSON.parse(readData);
+
+    const objectToTranslate = JSON.parse(
+      await this.fileHandlerService.readFile(
+        fileNames.textsDir,
+        fileNames.fileWithObject,
+      ),
+    );
 
     const translatedData = await this.translate(body, objectToTranslate);
     const translatedObject = await this.createTranslatedObject(
@@ -31,7 +42,7 @@ export class TranslatorService {
     );
 
     await this.fileHandlerService.writeToFile(
-      CONSTS.TEXTS_DIR,
+      fileNames.textsDir,
       `${body.language}.json`,
       translatedObject,
     );
