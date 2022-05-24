@@ -11,18 +11,23 @@ export class TranslatorService {
     private readonly fileHandlerService: FileHandlerService,
   ) {}
 
+  //1 Jest obiekt
+  //no to mockuje fileHandlerService i sprwdzam czy jest to co zwraca
+  //2 nie ma
+  //czytam googla i sprawdzam czy fileHandlerservice miał coś zapisać i zwraca przetłumaczone wartości
   async getTranslatedData<T>(body: createTranslateDto, objectToTranslate: T) {
+    //if exists
     const readData = await this.fileHandlerService.readFile(
       CONSTS.TEXTS_DIR,
       `${body.language}.json`,
     );
     if (readData) return JSON.parse(readData);
 
-    const TranslatedData = await this.translate(body, objectToTranslate);
+    const translatedData = await this.translate(body, objectToTranslate);
     const translatedObject = await this.createTranslatedObject(
       objectToTranslate,
       0,
-      TranslatedData,
+      translatedData,
     );
 
     await this.fileHandlerService.writeToFile(
@@ -36,14 +41,12 @@ export class TranslatorService {
 
   private async translate<T>(body: createTranslateDto, objectToTranslate: T) {
     try {
-      const arrayOfTextsToTranslate = await this.getDataToTranslate(
-        objectToTranslate,
-      );
-      const response = await this.googleConnectorService.translate(
+      const arrayOfTextsToTranslate = [];
+      await this.getObjectValues(objectToTranslate, arrayOfTextsToTranslate);
+      return this.googleConnectorService.translate(
         arrayOfTextsToTranslate,
         body.language,
       );
-      return response;
     } catch (error) {
       console.log(error);
       throw error;
@@ -68,12 +71,6 @@ export class TranslatorService {
       index++;
     });
     return data;
-  }
-
-  private async getDataToTranslate<T>(objectToTranslate: T) {
-    const arrayOfValues: string[] = [];
-    this.getObjectValues(objectToTranslate, arrayOfValues);
-    return arrayOfValues;
   }
 
   private getObjectValues<T>(data: T, valuesArray: string[]) {
