@@ -16,16 +16,7 @@ export class FileHandlerService {
   }
 
   async readFile(dirName: string, fileName: string) {
-    try {
-      if (!this.checkIfExist(path.resolve(dirName, fileName))) return;
-      const result = await fs.promises.readFile(
-        path.resolve(dirName, fileName),
-        'utf8',
-      );
-      return result;
-    } catch (error) {
-      return error;
-    }
+    return fs.promises.readFile(path.resolve(dirName, fileName), 'utf8');
   }
 
   async writeToFile<T>(dirName: string, fileName: string, input: T) {
