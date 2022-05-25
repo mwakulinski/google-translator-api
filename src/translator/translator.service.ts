@@ -4,6 +4,7 @@ import { createTranslateDto } from './dto/create-translate.dto';
 import { FileHandlerService } from '../file-handler/file-handler.service';
 import { GoogleService } from '../google/google.service';
 import { GoogleLibraryService } from '../google/google-conntector/google-library/google-library.service';
+import { GoogleRestTranslatorService } from 'src/google/google-conntector/google-rest-translator/google-rest-translator.service';
 const path = require('path');
 
 const fileNames = {
@@ -47,6 +48,7 @@ export class TranslatorService {
       objectToTranslate,
       new GoogleLibraryService(),
     );
+    // new GoogleRestTranslatorService()
     const translatedObject = await this.createTranslatedObject(
       objectToTranslate,
       0,
@@ -69,8 +71,8 @@ export class TranslatorService {
   ) {
     try {
       const arrayOfTextsToTranslate = [];
-      await this.getObjectValues(objectToTranslate, arrayOfTextsToTranslate);
-      return this.googleService.translate(
+      this.getObjectValues(objectToTranslate, arrayOfTextsToTranslate);
+      return await this.googleService.translate(
         googleTranslationsClass,
         arrayOfTextsToTranslate,
         body.language,
