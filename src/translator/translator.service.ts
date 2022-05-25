@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { GoogleConnectorService } from './google-conntector/google-conntector.service';
+import { GoogleConnector } from '../google/google-conntector/google-connector';
 import { createTranslateDto } from './dto/create-translate.dto';
 import { FileHandlerService } from '../file-handler/file-handler.service';
+import { GoogleService } from '../google/google.service';
+import { GoogleLibraryService } from '../google/google-conntector/google-library/google-library.service';
+const path = require('path');
 
 const fileNames = {
   textsDir: 'texts',
@@ -11,7 +14,7 @@ const fileNames = {
 @Injectable()
 export class TranslatorService {
   constructor(
-    private readonly googleConnectorService: GoogleConnectorService,
+    private readonly googleService: GoogleService,
     private readonly fileHandlerService: FileHandlerService,
   ) {}
 
@@ -20,12 +23,17 @@ export class TranslatorService {
   //2 nie ma
   //czytam googla i sprawdzam czy fileHandlerservice miał coś zapisać i zwraca przetłumaczone wartości
   async getTranslatedData<T>(body: createTranslateDto) {
-    //if exists
-    const readData = await this.fileHandlerService.readFile(
-      fileNames.textsDir,
-      `${body.language}.json`,
-    );
-    if (readData) return JSON.parse(readData);
+    if (
+      this.fileHandlerService.checkIfExist(
+        path.resolve(fileNames.textsDir, `${body.language}.json`),
+      )
+    ) {
+      const readData = await this.fileHandlerService.readFile(
+        fileNames.textsDir,
+        `${body.language}.json`,
+      );
+      return JSON.parse(readData);
+    }
 
     const objectToTranslate = JSON.parse(
       await this.fileHandlerService.readFile(
@@ -34,7 +42,11 @@ export class TranslatorService {
       ),
     );
 
-    const translatedData = await this.translate(body, objectToTranslate);
+    const translatedData = await this.translate(
+      body,
+      objectToTranslate,
+      new GoogleLibraryService(),
+    );
     const translatedObject = await this.createTranslatedObject(
       objectToTranslate,
       0,
@@ -50,11 +62,16 @@ export class TranslatorService {
     return translatedObject;
   }
 
-  private async translate<T>(body: createTranslateDto, objectToTranslate: T) {
+  private async translate<T>(
+    body: createTranslateDto,
+    objectToTranslate: T,
+    googleTranslationsClass: GoogleConnector,
+  ) {
     try {
       const arrayOfTextsToTranslate = [];
       await this.getObjectValues(objectToTranslate, arrayOfTextsToTranslate);
-      return this.googleConnectorService.translate(
+      return this.googleService.translate(
+        googleTranslationsClass,
         arrayOfTextsToTranslate,
         body.language,
       );
