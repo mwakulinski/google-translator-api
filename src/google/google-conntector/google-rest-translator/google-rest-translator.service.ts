@@ -15,10 +15,7 @@ export class GoogleRestTranslatorService extends GoogleConnector {
         params: { key: key, q: text, target: language },
       },
     );
-
-    console.log(response);
     const data = response.data;
-    console.log(data.data.translations);
-    return data;
+    return data.data.translations;
   }
 }
