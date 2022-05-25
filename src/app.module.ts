@@ -4,12 +4,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TranslatorModule } from './translator/translator.module';
 import { FileHandlerModule } from './file-handler/file-handler.module';
+import { GoogleModule } from './google/google.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TranslatorModule,
     FileHandlerModule,
+    GoogleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
