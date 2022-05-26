@@ -3,7 +3,7 @@ import { GoogleConnector } from '../google/google-conntector/google-connector';
 import { createTranslateDto } from './dto/create-translate.dto';
 import { FileHandlerService } from '../file-handler/file-handler.service';
 import { GoogleService } from '../google/google.service';
-import { GoogleLibraryService } from '../google/google-conntector/google-library/google-library.service';
+import { GoogleLibraryTranslatorService } from '../google/google-conntector/google-library-translator/google-library-translator.service';
 import { GoogleRestTranslatorService } from 'src/google/google-conntector/google-rest-translator/google-rest-translator.service';
 const path = require('path');
 

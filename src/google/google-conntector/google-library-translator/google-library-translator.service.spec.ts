@@ -1,15 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GoogleLibraryService } from './google-library.service';
+import { GoogleLibraryTranslatorService } from './google-library-translator.service';
 
 describe('GoogleLibraryService', () => {
-  let service: GoogleLibraryService;
+  let service: GoogleLibraryTranslatorService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GoogleLibraryService],
+      providers: [GoogleLibraryTranslatorService],
     }).compile();
 
-    service = module.get<GoogleLibraryService>(GoogleLibraryService);
+    service = module.get<GoogleLibraryTranslatorService>(
+      GoogleLibraryTranslatorService,
+    );
   });
 
   it('should be defined', () => {

@@ -3,7 +3,7 @@ import { GoogleConnector } from '../google-connector';
 import { v2 } from '@google-cloud/translate';
 
 @Injectable()
-export class GoogleLibraryService extends GoogleConnector {
+export class GoogleLibraryTranslatorService extends GoogleConnector {
   protected createTranslatorService(): v2.Translate {
     const projectId = process.env.PROJECT_ID;
     const credentials = JSON.parse(process.env.CREDENTIALS);
