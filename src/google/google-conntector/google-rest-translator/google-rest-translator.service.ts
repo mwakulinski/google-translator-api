@@ -6,16 +6,25 @@ import { GoogleConnector } from '../google-connector';
 export class GoogleRestTranslatorService extends GoogleConnector {
   protected createTranslatorService() {}
   protected async translateData(textToTranslate: string[], language: string) {
-    const text = textToTranslate.join(' ');
     const key = process.env.KEY;
+    let url = 'https://translation.googleapis.com/language/translate/v2';
+
+    console.log(textToTranslate);
+
     const response = await axios.post(
-      'https://translation.googleapis.com/language/translate/v2',
-      {},
+      url,
+      { q: textToTranslate, target: language },
       {
-        params: { key: key, q: text, target: language },
+        params: {
+          key: key,
+        },
       },
     );
-    const data = response.data;
-    return data.data.translations;
+    const data = response.data.data.translations.map(
+      ({ translatedText, detectedSourceLanguage }) => {
+        return translatedText;
+      },
+    );
+    return data;
   }
 }

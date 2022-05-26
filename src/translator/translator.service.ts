@@ -46,9 +46,10 @@ export class TranslatorService {
     const translatedData = await this.translate(
       body,
       objectToTranslate,
-      new GoogleLibraryService(),
+      new GoogleRestTranslatorService(),
     );
     // new GoogleRestTranslatorService()
+    // new GoogleLibraryService(),
     const translatedObject = await this.createTranslatedObject(
       objectToTranslate,
       0,
