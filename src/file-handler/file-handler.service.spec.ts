@@ -61,13 +61,6 @@ describe('FileHandlerService', () => {
       await service.readFile('texts', 'en.json');
       expect(fs.promises.readFile).toHaveBeenCalledTimes(1);
     });
-
-    it('should not read data form file if file does not exist', async () => {
-      //@ts-ignore
-      fs.existsSync = jest.fn().mockReturnValue(false);
-      await service.readFile('texts', 'en.json');
-      expect(fs.promises.readFile).toHaveBeenCalledTimes(0);
-    });
   });
 
   describe('checkIfExist', () => {
