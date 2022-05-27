@@ -29,11 +29,12 @@ export class TranslatorService {
         path.resolve(fileNames.textsDir, `${body.language}.json`),
       )
     ) {
-      const readData = await this.fileHandlerService.readFile(
-        fileNames.textsDir,
-        `${body.language}.json`,
+      return JSON.parse(
+        await this.fileHandlerService.readFile(
+          fileNames.textsDir,
+          `${body.language}.json`,
+        ),
       );
-      return JSON.parse(readData);
     }
 
     const objectToTranslate = JSON.parse(
