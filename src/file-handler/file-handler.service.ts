@@ -4,11 +4,11 @@ const path = require('path');
 
 @Injectable()
 export class FileHandlerService {
-  async createDirectory(dirName: string) {
-    if (this.checkIfExist(path.resolve(dirName))) {
+  async createDirectory(...dirsName: string[]) {
+    if (this.checkIfExist(path.resolve(...dirsName))) {
       return;
     }
-    await fs.promises.mkdir(path.resolve(dirName));
+    await fs.promises.mkdir(path.resolve(...dirsName));
   }
 
   checkIfExist(...filesInPath: string[]): boolean {
