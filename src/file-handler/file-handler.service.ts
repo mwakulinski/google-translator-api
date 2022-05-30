@@ -11,8 +11,8 @@ export class FileHandlerService {
     await fs.promises.mkdir(path.resolve(dirName));
   }
 
-  checkIfExist(pathToFile: string) {
-    return fs.existsSync(path.resolve(pathToFile));
+  checkIfExist(...filesInPath: string[]): boolean {
+    return fs.existsSync(path.resolve(...filesInPath));
   }
 
   async readFile(dirName: string, fileName: string) {

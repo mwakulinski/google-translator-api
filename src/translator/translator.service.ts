@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { GoogleConnector } from '../google/google-conntector/google-connector';
-import { createTranslateDto } from './dto/create-translate.dto';
+import { GoogleConnector } from '../translator-api/google-conntector/google-connector';
+import { createTranslateDto as CreateTranslateDto } from './dto/create-translate.dto';
 import { FileHandlerService } from '../file-handler/file-handler.service';
-import { GoogleService } from '../google/google.service';
-import { GoogleLibraryTranslatorService } from '../google/google-conntector/google-library-translator/google-library-translator.service';
-import { GoogleRestTranslatorService } from 'src/google/google-conntector/google-rest-translator/google-rest-translator.service';
+import { GoogleService } from '../translator-api/google.service';
+import { GoogleLibraryTranslatorService } from '../translator-api/google-conntector/google-library-translator/google-library-translator.service';
+import { GoogleRestTranslatorService } from '../translator-api/google-conntector/google-rest-translator/google-rest-translator.service';
 const path = require('path');
 
 const fileNames = {
@@ -20,13 +20,15 @@ export class TranslatorService {
   ) {}
 
   //1 Jest obiekt
-  //no to mockuje fileHandlerService i sprwdzam czy jest to co zwraca
+  //no to mockuje fileHandlerService i sprawdzam czy jest to co zwraca
   //2 nie ma
   //czytam googla i sprawdzam czy fileHandlerservice miał coś zapisać i zwraca przetłumaczone wartości
-  async getTranslatedData<T>(body: createTranslateDto) {
+
+  async getTranslatedData<T>(body: CreateTranslateDto) {
     if (
       this.fileHandlerService.checkIfExist(
-        path.resolve(fileNames.textsDir, `${body.language}.json`),
+        fileNames.textsDir,
+        `${body.language}.json`,
       )
     ) {
       return JSON.parse(
@@ -67,7 +69,7 @@ export class TranslatorService {
   }
 
   private async translate<T>(
-    body: createTranslateDto,
+    body: CreateTranslateDto,
     objectToTranslate: T,
     googleTranslationsClass: GoogleConnector,
   ) {
