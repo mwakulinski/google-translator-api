@@ -60,9 +60,9 @@ export class TranslatorService {
     );
 
     await this.fileHandlerService.writeToFile(
-      fileNames.textsDir,
       `${body.language}.json`,
       translatedObject,
+      fileNames.textsDir,
     );
 
     return translatedObject;

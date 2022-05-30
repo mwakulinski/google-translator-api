@@ -19,11 +19,11 @@ export class FileHandlerService {
     return fs.promises.readFile(path.resolve(...dirsInPath, fileName), 'utf8');
   }
 
-  async writeToFile<T>(dirName: string, fileName: string, input: T) {
+  async writeToFile<T>(fileName: string, input: T, ...dirsName: string[]) {
     try {
-      await this.createDirectory(dirName);
+      await this.createDirectory(...dirsName);
       await fs.promises.writeFile(
-        path.resolve(dirName, fileName),
+        path.resolve(...dirsName, fileName),
         JSON.stringify(input),
       );
     } catch (error) {
