@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TranslatorService } from './translator.service';
 import { TranslatorController } from './translator.controller';
 import { FileHandlerModule } from '../file-handler/file-handler.module';
-import { GoogleModule } from 'src/google/google.module';
+import { GoogleModule } from 'src/translator-api/google.module';
 
 @Module({
   imports: [FileHandlerModule, GoogleModule],

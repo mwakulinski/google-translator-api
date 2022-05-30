@@ -4,7 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TranslatorModule } from './translator/translator.module';
 import { FileHandlerModule } from './file-handler/file-handler.module';
-import { GoogleModule } from './google/google.module';
+import { GoogleModule } from './translator-api/google.module';
 
 @Module({
   imports: [

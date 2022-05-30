@@ -3,6 +3,5 @@ export abstract class GoogleConnector {
     return await this.translateData(textToTranslate, language);
   }
 
-  protected abstract createTranslatorService();
   protected abstract translateData(textToTranslate: string[], language: string);
 }

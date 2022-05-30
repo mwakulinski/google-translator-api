@@ -4,12 +4,9 @@ import { GoogleConnector } from '../google-connector';
 
 @Injectable()
 export class GoogleRestTranslatorService extends GoogleConnector {
-  protected createTranslatorService() {}
   protected async translateData(textToTranslate: string[], language: string) {
     const key = process.env.KEY;
     let url = 'https://translation.googleapis.com/language/translate/v2';
-
-    console.log(textToTranslate);
 
     const response = await axios.post(
       url,
@@ -20,11 +17,10 @@ export class GoogleRestTranslatorService extends GoogleConnector {
         },
       },
     );
-    const data = response.data.data.translations.map(
+    return response.data.data.translations.map(
       ({ translatedText, detectedSourceLanguage }) => {
         return translatedText;
       },
     );
-    return data;
   }
 }
