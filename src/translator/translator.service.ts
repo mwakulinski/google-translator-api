@@ -33,16 +33,16 @@ export class TranslatorService {
     ) {
       return JSON.parse(
         await this.fileHandlerService.readFile(
-          fileNames.textsDir,
           `${body.language}.json`,
+          fileNames.textsDir,
         ),
       );
     }
 
     const objectToTranslate = JSON.parse(
       await this.fileHandlerService.readFile(
-        fileNames.textsDir,
         fileNames.fileWithObject,
+        fileNames.textsDir,
       ),
     );
 
