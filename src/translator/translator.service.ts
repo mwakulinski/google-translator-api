@@ -68,14 +68,14 @@ export class TranslatorService {
     return translatedObject;
   }
 
-  private async translate<T>(
+  private async translate<T extends object>(
     body: CreateTranslateDto,
-    objectToTranslate: T,
+    objectToTranslate: T | string,
     googleTranslationsClass: GoogleConnector,
   ) {
     try {
-      const arrayOfTextsToTranslate = [];
-      this.getObjectValues(objectToTranslate, arrayOfTextsToTranslate);
+      const arrayOfTextsToTranslate =
+        this.getValuesToTranslate(objectToTranslate);
       return await this.googleService.translate(
         googleTranslationsClass,
         arrayOfTextsToTranslate,
@@ -107,16 +107,24 @@ export class TranslatorService {
     return data;
   }
 
-  private getObjectValues<T>(data: T, valuesArray: string[]) {
-    if (typeof data === 'object') {
-      const values = Object.values(data);
-      values.forEach((value) => {
-        if (typeof value === 'object') {
-          return this.getObjectValues(value, valuesArray);
-        }
-        valuesArray.push(value);
-        return;
-      });
+  private getObjectValues<T>(ObjectToTakeValuesFrom: T, valuesArray: string[]) {
+    const values = Object.values(ObjectToTakeValuesFrom);
+    values.forEach((value) => {
+      if (typeof value === 'object') {
+        return this.getObjectValues(value, valuesArray);
+      }
+      valuesArray.push(value);
+      // return;
+    });
+  }
+
+  private getValuesToTranslate<T extends object>(dataToTranslate: T | string) {
+    const valuesToTranslate = [];
+    if (typeof dataToTranslate === 'object') {
+      this.getObjectValues(dataToTranslate, valuesToTranslate);
+    } else {
+      valuesToTranslate.push(dataToTranslate);
     }
+    return valuesToTranslate;
   }
 }
