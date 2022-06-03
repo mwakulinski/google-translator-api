@@ -19,12 +19,7 @@ export class TranslatorService {
     private readonly fileHandlerService: FileHandlerService,
   ) {}
 
-  //1 Jest obiekt
-  //no to mockuje fileHandlerService i sprawdzam czy jest to co zwraca
-  //2 nie ma
-  //czytam googla i sprawdzam czy fileHandlerservice miał coś zapisać i zwraca przetłumaczone wartości
-
-  async getTranslatedData<T>(body: CreateTranslateDto) {
+  async getTranslatedData(body: CreateTranslateDto) {
     if (
       this.fileHandlerService.checkIfExist(
         fileNames.textsDir,
