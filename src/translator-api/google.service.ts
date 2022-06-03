@@ -6,8 +6,11 @@ export class GoogleService {
   translate(
     googleTranslationsClass: GoogleConnector,
     textToTranslate: string[],
-    language: string,
+    languageToTranslateTo: string,
   ) {
-    return googleTranslationsClass.translate(textToTranslate, language);
+    return googleTranslationsClass.translate(
+      textToTranslate,
+      languageToTranslateTo,
+    );
   }
 }
