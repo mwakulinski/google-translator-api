@@ -53,9 +53,10 @@ export class TranslatorService {
     );
     // new GoogleRestTranslatorService()
     // new GoogleLibraryService(),
+    let indexOfTranslatedValuesArray = 0;
     const translatedObject = await this.createTranslatedObject(
       objectToTranslate,
-      0,
+      indexOfTranslatedValuesArray,
       translatedData,
     );
 
@@ -114,7 +115,6 @@ export class TranslatorService {
         return this.getObjectValues(value, valuesArray);
       }
       valuesArray.push(value);
-      // return;
     });
   }
 
